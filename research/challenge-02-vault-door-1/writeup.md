@@ -91,7 +91,7 @@ print(f"picoCTF{{{password}}}")
 
 **Çıktı:**
 ```
-picoCTF{d35cr4cbl3_tH3_cH4r4cT3r5_fflace}
+picoCTF{d35cr4mbl3_tH3_cH4r4cT3r5_75092e}
 ```
 
 ---
@@ -100,12 +100,15 @@ picoCTF{d35cr4cbl3_tH3_cH4r4cT3r5_fflace}
 
 Flag platforma gönderildi → ✅ Kabul edildi.
 
+![vault-door-1 challenge sayfası](screenshots/vault-door-1-challenge.png)  
+*picoCTF platform — vault-door-1 challenge sayfası ve flag giriş ekranı*
+
 ---
 
 ## 🏁 Flag
 
 ```
-picoCTF{d35cr4cbl3_tH3_cH4r4cT3r5_fflace}
+picoCTF{d35cr4mbl3_tH3_cH4r4cT3r5_75092e}
 ```
 
 ---
