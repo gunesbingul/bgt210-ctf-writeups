@@ -137,6 +137,9 @@ assert check_key(keygen("PICOCTF"), "PICOCTF") == True
 print("✅ Anahtar geçerli!")
 ```
 
+![keygenme-py terminal çıktısı](screenshots/keygenme-terminal.png)  
+*Arcane Calculator — license key girişi ve flag çıktısı*
+
 ---
 
 ## 🏁 Flag
