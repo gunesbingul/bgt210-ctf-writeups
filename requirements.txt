@@ -1,0 +1,3 @@
+# BGT210 Topic #23 — CTF RE Write-ups
+# Güneş Bingül — 2320191055
+# Sadece stdlib kullanılıyor / Only stdlib used

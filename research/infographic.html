@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>CTF RE Akış Rehberi — BGT210 | Güneş Bingül</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Segoe UI', sans-serif; background: #0d1117; color: #e6edf3; padding: 28px 20px; }
+
+  .header { text-align: center; margin-bottom: 32px; }
+  .header h1 { font-size: 1.5rem; color: #58a6ff; margin-bottom: 4px; }
+  .header h2 { font-size: 1rem; color: #3fb950; font-weight: 500; margin-bottom: 8px; }
+  .header .meta { font-size: 0.78rem; color: #8b949e; }
+
+  /* FLOW */
+  .flow-container { max-width: 680px; margin: 0 auto 40px; }
+  .phase-label {
+    text-align: center; font-size: 0.7rem; font-weight: 700;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    color: #f78166; border: 1px solid #f78166;
+    border-radius: 20px; padding: 3px 16px;
+    display: inline-block; margin: 18px auto 10px;
+  }
+  .phase-wrap { text-align: center; }
+  .step {
+    background: #161b22; border: 1px solid #30363d;
+    border-radius: 10px; padding: 14px 18px;
+    display: flex; align-items: flex-start; gap: 12px;
+    transition: border-color 0.2s; margin-bottom: 0;
+  }
+  .step:hover { border-color: #58a6ff; }
+  .num {
+    background: #1f6feb; color: #fff; font-weight: 700;
+    font-size: 0.75rem; min-width: 26px; height: 26px;
+    border-radius: 50%; display: flex; align-items: center;
+    justify-content: center; flex-shrink: 0; margin-top: 2px;
+  }
+  .step-body { flex: 1; }
+  .step-title { font-weight: 600; font-size: 0.9rem; color: #e6edf3; margin-bottom: 3px; }
+  .cmd {
+    font-family: 'Consolas', monospace; font-size: 0.75rem;
+    color: #7ee787; background: #0d1117;
+    padding: 2px 8px; border-radius: 4px;
+    display: inline-block; margin-bottom: 3px;
+  }
+  .note { font-size: 0.75rem; color: #8b949e; margin-top: 2px; }
+  .arrow { text-align: center; color: #30363d; font-size: 1.2rem; margin: 3px 0; }
+
+  /* CHALLENGES GRID */
+  .section-title {
+    text-align: center; font-size: 1rem; font-weight: 700;
+    color: #e6edf3; margin: 32px 0 16px;
+  }
+  .grid {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 12px; max-width: 680px; margin: 0 auto;
+  }
+  .card {
+    background: #161b22; border: 1px solid #30363d;
+    border-radius: 10px; padding: 14px 16px;
+    transition: border-color 0.2s;
+  }
+  .card:hover { border-color: #3fb950; }
+  .card.wide { grid-column: 1 / -1; }
+  .card-num { font-size: 0.7rem; color: #8b949e; margin-bottom: 3px; }
+  .card-title { font-weight: 700; font-size: 0.9rem; color: #3fb950; margin-bottom: 2px; }
+  .card-platform { font-size: 0.72rem; color: #8b949e; margin-bottom: 6px; }
+  .card-technique { font-size: 0.78rem; color: #e6edf3; margin-bottom: 8px; }
+  .card-steps { font-size: 0.72rem; color: #8b949e; border-top: 1px solid #21262d; padding-top: 7px; }
+  .card-steps span { display: block; margin-bottom: 2px; }
+  .badge {
+    display: inline-block; background: #238636;
+    color: #fff; font-size: 0.68rem; font-weight: 700;
+    padding: 2px 8px; border-radius: 10px; margin-top: 6px;
+  }
+
+  /* TECHNIQUE TABLE */
+  .table-wrap { max-width: 680px; margin: 32px auto; overflow-x: auto; }
+  table { width: 100%; border-collapse: collapse; font-size: 0.8rem; }
+  th { background: #161b22; color: #8b949e; font-weight: 600;
+       padding: 10px 12px; text-align: left; border-bottom: 1px solid #30363d; }
+  td { padding: 9px 12px; border-bottom: 1px solid #21262d; }
+  tr:hover td { background: #161b22; }
+  .yes { color: #3fb950; font-weight: 600; }
+  .no  { color: #484f58; }
+
+  footer { text-align: center; margin-top: 36px; font-size: 0.72rem; color: #484f58; }
+
+  @media (max-width: 480px) {
+    .grid { grid-template-columns: 1fr; }
+    .card.wide { grid-column: 1; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>🔍 CTF Reverse Engineering — Akış Rehberi</h1>
+  <h2>BGT210 Tersine Mühendislik · Konu #23</h2>
+  <div class="meta">
+    Öğrenci: Güneş Bingül — 2320191055 &nbsp;|&nbsp;
+    Danışman: Keyvan Arasteh &nbsp;|&nbsp;
+    İstinye Üniversitesi · 2025-2026 Bahar
+  </div>
+</div>
+
+<!-- FLOW -->
+<div class="flow-container">
+
+  <div class="phase-wrap">
+    <div class="phase-label">Faz 1 — İlk Keşif</div>
+  </div>
+
+  <div class="step">
+    <div class="num">1</div>
+    <div class="step-body">
+      <div class="step-title">Dosya türünü belirle</div>
+      <div class="cmd">file &lt;binary&gt;</div>
+      <div class="note">ELF mi? PE mi? Script mi? Packed mi? 32-bit mi 64-bit mi? — Her zaman buradan başla.</div>
+    </div>
+  </div>
+  <div class="arrow">↓</div>
+
+  <div class="step">
+    <div class="num">2</div>
+    <div class="step-body">
+      <div class="step-title">String'leri tara</div>
+      <div class="cmd">strings &lt;binary&gt; | grep -iE "flag|pass|key|correct"</div>
+      <div class="note">Kolay challenge'ların ~%30'u burada çözülür. Flag görünürse bitti.</div>
+    </div>
+  </div>
+  <div class="arrow">↓</div>
+
+  <div class="step">
+    <div class="num">3</div>
+    <div class="step-body">
+      <div class="step-title">Packing kontrol et</div>
+      <div class="cmd">strings &lt;binary&gt; | grep UPX</div>
+      <div class="note">Packed ise → <span style="color:#7ee787">upx -d binary -o unpacked</span> → Adım 1'den başa dön.</div>
+    </div>
+  </div>
+  <div class="arrow">↓</div>
+
+  <div class="step">
+    <div class="num">4</div>
+    <div class="step-body">
+      <div class="step-title">Kütüphane çağrılarını izle</div>
+      <div class="cmd">ltrace ./binary | grep -i cmp</div>
+      <div class="note">strcmp/memcmp yakalanır — binary'nin neyle karşılaştırdığı görünür.</div>
+    </div>
+  </div>
+
+  <div class="phase-wrap" style="margin-top:14px;">
+    <div class="phase-label">Faz 2 — Statik Analiz</div>
+  </div>
+
+  <div class="step">
+    <div class="num">5</div>
+    <div class="step-body">
+      <div class="step-title">Ghidra — başarı string'ini bul</div>
+      <div class="cmd">Window → Defined Strings → "Correct" / "Congratulations" ara</div>
+      <div class="note">Çift tıkla → referans lokasyonuna atla → üstündeki koşulu oku.</div>
+    </div>
+  </div>
+  <div class="arrow">↓</div>
+
+  <div class="step">
+    <div class="num">6</div>
+    <div class="step-body">
+      <div class="step-title">Doğrulama fonksiyon türünü belirle</div>
+      <div class="cmd">(decompile edilmiş C çıktısını oku)</div>
+      <div class="note">Direkt strcmp? → string al. XOR? → geri al. MD5? → ileri çalış. Çok aşamalı? → hepsini karşıla.</div>
+    </div>
+  </div>
+  <div class="arrow">↓</div>
+
+  <div class="step">
+    <div class="num">7</div>
+    <div class="step-body">
+      <div class="step-title">Cevabı yeniden oluştur</div>
+      <div class="cmd">python3 solve.py</div>
+      <div class="note">Karmaşık yeniden yapılandırma için Python scripti yaz (indis eşleştirme, keygen, XOR).</div>
+    </div>
+  </div>
+
+  <div class="phase-wrap" style="margin-top:14px;">
+    <div class="phase-label">Faz 3 — Dinamik Analiz</div>
+  </div>
+
+  <div class="step">
+    <div class="num">8</div>
+    <div class="step-body">
+      <div class="step-title">GDB / x64dbg — statik yetmediyse</div>
+      <div class="cmd">gdb ./binary → b strcmp → run → x/s $rdi → x/s $rsi</div>
+      <div class="note">Karşılaştırmadaki register'ları incele. $rdi = girdimiz, $rsi = beklenen değer.</div>
+    </div>
+  </div>
+  <div class="arrow">↓</div>
+
+  <div class="step">
+    <div class="num">9</div>
+    <div class="step-body">
+      <div class="step-title">Binary ile doğrula</div>
+      <div class="cmd">./binary → cevabı gir → ✅ Congratulations!</div>
+      <div class="note">Asla binary'de test etmeden gönderme.</div>
+    </div>
+  </div>
+  <div class="arrow">↓</div>
+
+  <div class="step">
+    <div class="num">10</div>
+    <div class="step-body">
+      <div class="step-title">Write-up yaz</div>
+      <div class="cmd">docs/research/challenge-0N-name/writeup.md + research-notes.md</div>
+      <div class="note">Komutlar + bulgular + flag + teknik kataloğu. Sadece write-up'tan yeniden çözülebilir olmalı.</div>
+    </div>
+  </div>
+
+</div>
+
+<!-- CHALLENGE CARDS -->
+<div class="section-title">⚔️ Çözülen 5 Meydan Okuma</div>
+<div class="grid">
+
+  <div class="card">
+    <div class="card-num">#1 · CrackMes.one · Easy ⭐</div>
+    <div class="card-title">CrackMe Baby</div>
+    <div class="card-platform">Kategori: ELF — Serial Check</div>
+    <div class="card-technique">strings + ltrace → hardcoded serial</div>
+    <div class="card-steps">
+      <span>① file → 32-bit ELF tespit</span>
+      <span>② strings → s3cr3t_k3y_42 bulundu</span>
+      <span>③ ltrace → strcmp doğrulandı</span>
+      <span>④ Ghidra → .rodata plaintext serial</span>
+    </div>
+    <span class="badge">✅ FLAG FOUND</span>
+  </div>
+
+  <div class="card">
+    <div class="card-num">#2 · picoCTF · Easy ⭐</div>
+    <div class="card-title">vault-door-1</div>
+    <div class="card-platform">Kategori: Java Source Analysis</div>
+    <div class="card-technique">charAt() indis mapping → Python</div>
+    <div class="card-steps">
+      <span>① Java kaynak okundu</span>
+      <span>② checkPassword() analiz edildi</span>
+      <span>③ Python dict ile indis eşleştirme</span>
+      <span>④ 32 karakterlik şifre oluşturuldu</span>
+    </div>
+    <span class="badge">✅ FLAG FOUND</span>
+  </div>
+
+  <div class="card">
+    <div class="card-num">#3 · picoCTF · Medium ⭐⭐</div>
+    <div class="card-title">keygenme-py</div>
+    <div class="card-platform">Kategori: Python Key Validation</div>
+    <div class="card-technique">MD5 + XOR reversal → keygen</div>
+    <div class="card-steps">
+      <span>① check_key() analiz edildi</span>
+      <span>② MD5 → hex[:8] → XOR 0x37 anlaşıldı</span>
+      <span>③ Offset pattern (+2, -1) tespit edildi</span>
+      <span>④ Genelleştirilmiş keygen yazıldı</span>
+    </div>
+    <span class="badge">✅ FLAG FOUND</span>
+  </div>
+
+  <div class="card">
+    <div class="card-num">#4 · reversing.kr · Easy ⭐</div>
+    <div class="card-title">Easy Crack Me</div>
+    <div class="card-platform">Kategori: Windows PE Serial</div>
+    <div class="card-technique">Ghidra + x64dbg → 3-stage check</div>
+    <div class="card-steps">
+      <span>① file → Windows PE32 tespit</span>
+      <span>② strings → success string bulundu</span>
+      <span>③ Ghidra → 3 aşamalı kontrol okundu</span>
+      <span>④ x64dbg breakpoint → doğrulandı</span>
+    </div>
+    <span class="badge">✅ FLAG FOUND</span>
+  </div>
+
+  <div class="card wide">
+    <div class="card-num">#5 · picoCTF · Medium ⭐⭐</div>
+    <div class="card-title">unpackme</div>
+    <div class="card-platform">Kategori: Packed Binary (UPX)</div>
+    <div class="card-technique">UPX detection → upx -d → strings → Ghidra</div>
+    <div class="card-steps" style="display:grid; grid-template-columns:1fr 1fr; gap:2px;">
+      <span>① file → UPX compressed tespit</span>
+      <span>② strings → sadece UPX imzası</span>
+      <span>③ upx -d → tek komutla açıldı</span>
+      <span>④ strings → flag plaintext görüldü</span>
+    </div>
+    <span class="badge">✅ FLAG FOUND</span>
+  </div>
+
+</div>
+
+<!-- TECHNIQUE TABLE -->
+<div class="section-title" style="margin-top:36px;">🛠 Teknik Kullanım Özeti</div>
+<div class="table-wrap">
+  <table>
+    <thead>
+      <tr>
+        <th>Teknik / Tool</th>
+        <th>Ch.1</th><th>Ch.2</th><th>Ch.3</th><th>Ch.4</th><th>Ch.5</th>
+        <th>Ne Zaman Kullan?</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td><code>file</code></td>
+        <td class="yes">✅</td><td class="no">—</td><td class="no">—</td><td class="yes">✅</td><td class="yes">✅</td>
+        <td>Her zaman — ilk adım</td></tr>
+      <tr><td><code>strings</code></td>
+        <td class="yes">✅</td><td class="no">—</td><td class="no">—</td><td class="yes">✅</td><td class="yes">✅</td>
+        <td>file'dan sonra — quick win dene</td></tr>
+      <tr><td><code>ltrace</code></td>
+        <td class="yes">✅</td><td class="no">—</td><td class="no">—</td><td class="no">—</td><td class="no">—</td>
+        <td>Dinamik bağlantılı ELF'lerde</td></tr>
+      <tr><td>Ghidra</td>
+        <td class="yes">✅</td><td class="no">—</td><td class="no">—</td><td class="yes">✅</td><td class="yes">✅</td>
+        <td>strings yetmediyse — decompile</td></tr>
+      <tr><td>x64dbg</td>
+        <td class="no">—</td><td class="no">—</td><td class="no">—</td><td class="yes">✅</td><td class="no">—</td>
+        <td>Windows PE dinamik analiz</td></tr>
+      <tr><td>Python script</td>
+        <td class="no">—</td><td class="yes">✅</td><td class="yes">✅</td><td class="no">—</td><td class="no">—</td>
+        <td>Karmaşık yeniden yapılandırma</td></tr>
+      <tr><td><code>upx -d</code></td>
+        <td class="no">—</td><td class="no">—</td><td class="no">—</td><td class="no">—</td><td class="yes">✅</td>
+        <td>UPX packed binary</td></tr>
+      <tr><td>Kaynak okuma</td>
+        <td class="no">—</td><td class="yes">✅</td><td class="yes">✅</td><td class="no">—</td><td class="no">—</td>
+        <td>Kaynak verilmişse — binary araç gereksiz</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<footer>
+  BGT210 Reverse Engineering / Tersine Mühendislik · Konu #23 · İstinye Üniversitesi<br>
+  Öğrenci: Güneş Bingül — 2320191055 · Danışman: Keyvan Arasteh · 2025-2026 Bahar
+</footer>
+
+</body>
+</html>
