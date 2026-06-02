@@ -6,7 +6,7 @@
   # CTF Reverse Engineering Write-ups
   ### CTF Tersine Mühendislik Çözüm Yazıları
 
-  ![GitHub](https://img.shields.io/badge/GitHub-Private-red?style=flat-square&logo=github)
+  ![GitHub](https://img.shields.io/badge/GitHub-Public-red?style=flat-square&logo=github)
   ![Language](https://img.shields.io/badge/Language-Python-blue?style=flat-square)
   ![Status](https://img.shields.io/badge/Status-Completed-brightgreen?style=flat-square)
   ![Course](https://img.shields.io/badge/Course-BGT210-purple?style=flat-square)
@@ -64,44 +64,45 @@ Bu proje, İstinye Üniversitesi BGT210 Tersine Mühendislik dersinin **23. Konu
 
 ```
 .
-├── README.md                          ← Bu dosya / This file
-├── ROADMAP.md                         ← Proje yol haritası / Project roadmap
-├── Dockerfile                         ← Docker ortamı / Docker environment
-├── docker-compose.yml                 ← Docker compose
-├── .env.example                       ← Ortam değişkenleri / Environment variables
+├── README.md
+├── ROADMAP.md
+├── Dockerfile
+├── docker-compose.yml
+├── .env.example
 ├── .gitignore
 ├── requirements.txt
 │
-├── docs/
-│   ├── modules/
-│   │   └── ctf-writeups-module.md     ← Modül dokümantasyonu
-│   │
-│   ├── research/                      ← Derin araştırma klasörü
-│   │   ├── challenge-01-crackme-baby/
-│   │   │   ├── writeup.md             ← Çözüm yazısı
-│   │   │   └── research-notes.md     ← Araştırma notları
-│   │   ├── challenge-02-vault-door-1/
-│   │   │   ├── writeup.md
-│   │   │   └── research-notes.md
-│   │   ├── challenge-03-keygenme-py/
-│   │   │   ├── writeup.md
-│   │   │   └── research-notes.md
-│   │   ├── challenge-04-easy-crackme/
-│   │   │   ├── writeup.md
-│   │   │   └── research-notes.md
-│   │   ├── challenge-05-unpackme/
-│   │   │   ├── writeup.md
-│   │   │   └── research-notes.md
-│   │   └── infographic.html           ← Görsel RE akış rehberi
-│   │
-│   └── references/
-│       └── tools-and-resources.md     ← Araçlar ve kaynaklar
+├── modules/
+│   └── ctf-writeups-module.md
+│
+├── research/                          ← Derin araştırma klasörü
+│   ├── challenge-01-crackme-baby/
+│   │   ├── writeup.md
+│   │   └── research-notes.md
+│   ├── challenge-02-vault-door-1/
+│   │   ├── writeup.md
+│   │   ├── research-notes.md
+│   │   └── screenshots/
+│   ├── challenge-03-keygenme-py/
+│   │   ├── writeup.md
+│   │   ├── research-notes.md
+│   │   └── screenshots/
+│   ├── challenge-04-easy-crackme/
+│   │   ├── writeup.md
+│   │   └── research-notes.md
+│   ├── challenge-05-unpackme/
+│   │   ├── writeup.md
+│   │   └── research-notes.md
+│   └── infographic.html
+│
+├── references/
+│   └── tools-and-resources.md
 │
 ├── src/
 │   └── helper_scripts/
-│       └── string_extractor.py        ← Analiz yardımcı scripti
+│       └── string_extractor.py
 │
-└── reports/                           ← Çıktı raporları
+└── reports/
 ```
 
 ---
@@ -162,10 +163,10 @@ docker-compose up -d
 
 ## 📚 Documentation / Belgeleme
 
-Deep research notes → [`docs/research/`](./docs/research/)  
-Module documentation → [`docs/modules/ctf-writeups-module.md`](./docs/modules/ctf-writeups-module.md)  
-Tools & references → [`docs/references/tools-and-resources.md`](./docs/references/tools-and-resources.md)  
-Visual RE flow → [`docs/research/infographic.html`](./docs/research/infographic.html)
+Deep research notes → [`research/`](./research/)  
+Module documentation → [`modules/ctf-writeups-module.md`](./modules/ctf-writeups-module.md)  
+Tools & references → [`references/tools-and-resources.md`](./references/tools-and-resources.md)  
+Visual RE flow → [`research/infographic.html`](./research/infographic.html)
 
 ---
 
